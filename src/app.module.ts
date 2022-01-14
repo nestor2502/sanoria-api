@@ -4,6 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
+import { RecipeController } from './recipe/recipe.controller';
+import { RecipeModule } from './recipe/recipe.module';
 
 @Module({
   imports: [
@@ -22,6 +24,7 @@ import { UserModule } from './user/user.module';
       autoLoadEntities: true, // models will be loaded automatically 
       synchronize: true, // your entities will be synced with the database(recommended: disable in prod)
     }),
+    RecipeModule,
   ],
   controllers: [AppController],
   providers: [AppService],
