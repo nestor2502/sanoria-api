@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { RecipeController } from './recipe/recipe.controller';
 import { RecipeModule } from './recipe/recipe.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { RecipeModule } from './recipe/recipe.module';
       synchronize: true, // your entities will be synced with the database(recommended: disable in prod)
     }),
     RecipeModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

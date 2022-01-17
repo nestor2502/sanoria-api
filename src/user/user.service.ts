@@ -1,12 +1,26 @@
 import { Injectable, InternalServerErrorException, NotAcceptableException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Like, Repository } from 'typeorm';
+import { Equal, Like, Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Equals } from 'class-validator';
 
 @Injectable()
 export class UserService {
+
+  private readonly users = [
+    {
+      userId: 1,
+      username: 'john',
+      password: 'changeme',
+    },
+    {
+      userId: 2,
+      username: 'maria',
+      password: 'guess',
+    },
+  ];
   
   constructor( 
     @InjectRepository(User)
@@ -17,10 +31,10 @@ export class UserService {
     const existsUser = await this.userRepository.find({
       where:[
         {
-          name: Like(`%${user.name}%`)
+          name: Equal(`${user.name}`)
         },
         {
-          email: Like(`%${user.email}%`)
+          email: Equal(`${user.email}`)
         }
       ]}
     );
@@ -57,13 +71,21 @@ export class UserService {
     }
    return this.userRepository.remove(user);
   }
-
-  login(email: string, password: string){
-    return "login";
+  
+  async findOneByEmail(username) {
+     const user = await this.userRepository.find({
+      where:[
+        {
+          name: Equal(`${username}`)
+        }
+      ]}
+    )
+    if(!user){
+      return null;
+    }
+    return user[0];
   }
-
-  logout(userId: string){
-    return "logout";
-  }
+  
+  
 
 }
