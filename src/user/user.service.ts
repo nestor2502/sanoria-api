@@ -1,6 +1,6 @@
 import { Injectable, InternalServerErrorException, NotAcceptableException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Like, Repository } from 'typeorm';
+import { Equal, Like, Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -17,10 +17,10 @@ export class UserService {
     const existsUser = await this.userRepository.find({
       where:[
         {
-          name: Like(`%${user.name}%`)
+          name: Equal(`${user.name}`)
         },
         {
-          email: Like(`%${user.email}%`)
+          email: Equal(`${user.email}`)
         }
       ]}
     );
