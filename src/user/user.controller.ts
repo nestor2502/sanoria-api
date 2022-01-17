@@ -31,14 +31,4 @@ export class UserController {
     return this.userService.remove(userId);
   }
 
-  @Get('login')
-  login(@Headers('email') email: string, @Headers('password') password: string){
-    return this.userService.login(email, password);
-  }
-
-  @Delete('logout/:userId')
-  logout(@Param('userId') userId){
-    return this.userService.logout(userId);
-  }
-
 }

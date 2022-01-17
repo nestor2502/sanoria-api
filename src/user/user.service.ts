@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException, NotAcceptableException, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, NotAcceptableException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Equal, Like, Repository } from 'typeorm';
 import { User } from './entities/user.entity';
@@ -58,12 +58,34 @@ export class UserService {
    return this.userRepository.remove(user);
   }
 
-  login(email: string, password: string){
-    return "login";
+  async login( updateUserDto){
+    if(!updateUserDto.name){
+      throw new BadRequestException("Invalid username")
+    }
+    const existsUser = await this.userRepository.find({
+      where:[
+        {
+          name: Equal(`${updateUserDto.name}`)
+        }
+      ]}
+    );
+    if (!existsUser || existsUser.length == 0){
+      throw new NotFoundException(`Username #${updateUserDto.name} not found`);
+    }
+    existsUser[0].token = updateUserDto.token;
+    return this.userRepository.save(existsUser[0]);
   }
 
-  logout(userId: string){
-    return "logout";
-  }
 
+  async logout(userId: string){
+    const user = await this.userRepository.preload({
+      id: +userId,
+      token: null,
+    });
+    if (!user){
+      throw new NotFoundException(`User #${userId} not found`)
+    }
+    return this.userRepository.save(user);
+  }
+  
 }
