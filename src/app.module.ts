@@ -8,6 +8,8 @@ import { RecipeController } from './recipe/recipe.controller';
 import { RecipeModule } from './recipe/recipe.module';
 import { AuthModule } from './auth/auth.module';
 import { CommonModule } from './common/common.module';
+import { FoodController } from './food/food.controller';
+import { FoodModule } from './food/food.module';
 
 @Module({
   imports: [
@@ -28,9 +30,10 @@ import { CommonModule } from './common/common.module';
     }),
     RecipeModule,
     AuthModule,
-    CommonModule
+    CommonModule,
+    FoodModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, FoodController],
   providers: [AppService],
 })
 export class AppModule {}
