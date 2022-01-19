@@ -92,14 +92,9 @@ export class UserService {
       await this.weightRepository.save(weight_log)
     }
     if(updateUserDto.height){
-      
-      console.log("updateUserDto.height")
-      console.log(updateUserDto.height)
       const height_log = await Promise.all(
         [updateUserDto.height].map(height => this.preloadHeight(height, userId))
       );
-      console.log("height_log")
-      console.log(height_log)
       await this.heightRepository.save(height_log)
     }
     return {status: "ok"};

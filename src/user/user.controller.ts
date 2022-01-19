@@ -18,13 +18,11 @@ export class UserController {
     return this.userService.create(user);
   }
 
-  @Public()
   @Get(':userId')
   findOne(@Param('userId') userId: string){
     return this.userService.findOne(userId);
   }
   
-  @Public()
   @Patch(':userId')
   update(@Param('userId') userId: string, @Body() user: UpdateUserDto){
     return this.userService.update(userId, user);
