@@ -1,7 +1,13 @@
 import { BadRequestException, HttpException, HttpStatus, Injectable, InternalServerErrorException, NotFoundException, ServiceUnavailableException } from '@nestjs/common';
 import { HttpService } from '../common/http/request'
-import { Recipe } from './model/recipe-model';
+import { CreateRecipeDto } from './dto/create-recipe.dto';
+import { RecipeDetail } from './model/recipe-model';
 import { RecipeResponse } from './model/recipe-response';
+import { Recipe } from './entities/recipe.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { User } from 'src/user/entities/user.entity';
+import { UserService } from 'src/user/user.service';
 
 
 @Injectable()
@@ -9,11 +15,15 @@ export class RecipeService {
 
   private  http: HttpService;
 
-  constructor(){
+  constructor(
+    @InjectRepository(Recipe)
+    private readonly recipeRepository: Repository<Recipe>,
+    private userService: UserService
+  ){
     this.http = new HttpService();
   }
-  
-  async getRecipe(search: string){
+
+  async searchRecipes(search: string){
     if(!search || search === ""){
       throw new BadRequestException("Not search word")
     }
@@ -33,6 +43,29 @@ export class RecipeService {
     }
   }
 
+  async getRecipe(recipeId: string){
+    return "this returns a recipe from edemam's api";
+  }
+
+  async create(recipe: CreateRecipeDto){
+    const user = await this.userService.findOne(recipe.userId+"");
+    if(!user){
+      throw new NotFoundException(`User #${recipe.userId} not found`)
+    }
+    const newRecipe = this.recipeRepository.create({
+      ...recipe
+    });
+    return this.recipeRepository.save(newRecipe);
+  }
+
+  async remove(recipeId: string){
+    const recipe = await this.recipeRepository.findOne(recipeId);
+    if(!recipe){
+      throw new NotFoundException(`Recipe #${recipeId} not found`)
+    }
+   return this.recipeRepository.remove(recipe);
+  }
+
   wrapResponse(data: RecipeResponse){
     
     let wrapper = {
@@ -41,7 +74,7 @@ export class RecipeService {
       data: []
     }
     data.hits.forEach(recipeContainer => {
-      const fullRecipe: Recipe = recipeContainer.recipe;
+      const fullRecipe: RecipeDetail = recipeContainer.recipe;
       wrapper.data.push({
         label: fullRecipe.label? fullRecipe.label: "",
         image: fullRecipe.images? fullRecipe.images: [],

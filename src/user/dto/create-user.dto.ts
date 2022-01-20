@@ -26,7 +26,4 @@ export class CreateUserDto {
   @IsString({each: true})
   readonly allergies: string[];
 
-
-
-
 }

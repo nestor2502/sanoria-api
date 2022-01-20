@@ -150,4 +150,30 @@ export class UserService {
     return this.heightRepository.create({ height , userId, date: moment().format('MMMM Do YYYY, h:mm:ss a')});
   }
   
+  async findWeightRegister(userId: string){
+    const weightLog = await this.weightRepository.find({
+      where:[
+        {
+          userId: Equal(`${userId}`)
+        }
+      ]});
+    if(!weightLog){
+      throw new NotFoundException(`User #${userId} log not found`)
+    }
+    return weightLog;
+  }
+
+  async findHeightRegister(userId: string){
+    const heightLog = await this.heightRepository.find({
+      where:[
+        {
+          userId: Equal(`${userId}`)
+        }
+      ]});
+    if(!heightLog){
+      throw new NotFoundException(`User #${userId} log not found`)
+    }
+    return heightLog;
+  }
+  
 }
