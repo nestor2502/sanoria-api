@@ -26,23 +26,20 @@ export class FoodService {
     try{
       let response = await this.http.makeCall(data)
       const res = JSON.parse(response+"");
-      return null;
-      //return this.wrapResponse(res);
+      return this.wrapResponse(res);
     }
     catch(err){
       throw new ServiceUnavailableException("There is an error from our provider")
     }
   }
 
-  /**
   wrapResponse(data: FoodResponse){
     
     let wrapper = {
-      from: data.text? data.text: "",
-      data: []
+      from: data.text? data.text: ""
     }
 
     return wrapper;
   }
-  */
+
 }

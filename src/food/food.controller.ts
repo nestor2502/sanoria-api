@@ -9,8 +9,8 @@ export class FoodController {
 
     @Public()
     @Get()
-    geRecipe(@Query() nameQuery){
-      const {foodName} = nameQuery;
-      return this.FoodService.getFood(foodName)
+    getFood(@Query() nameQuery){
+      const {ingr} = nameQuery;
+      return this.FoodService.getFood(ingr)
     }
 }

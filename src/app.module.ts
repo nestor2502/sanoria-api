@@ -33,7 +33,7 @@ import { FoodModule } from './food/food.module';
     CommonModule,
     FoodModule,
   ],
-  controllers: [AppController, FoodController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
