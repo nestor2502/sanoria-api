@@ -14,8 +14,8 @@ export class CreateUserDto {
   @IsString()
   readonly gender: string;
 
-  @IsNumber()
-  readonly age: number;
+  @IsString()
+  readonly birth: string;
 
   @IsNumber()
   readonly weight: number;
@@ -25,5 +25,7 @@ export class CreateUserDto {
   
   @IsString({each: true})
   readonly allergies: string[];
+  
+  token?: string;
 
 }

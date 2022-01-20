@@ -11,12 +11,12 @@ export class AuthService {
         private userService: UserService){}
 
     async login(user: any) {
-        console.log(user)
         user = user.body;
         const payload = { username: user.username, sub: user.email };
         const accessToken = this.jwtService.sign(payload);
-        await this.userService.login({name: user.username, token: accessToken})
+        let userResult = await this.userService.login({name: user.username, token: accessToken})
         return {
+          userId: userResult.id,
           access_token: accessToken,
         };
     }

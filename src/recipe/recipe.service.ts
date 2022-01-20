@@ -43,8 +43,23 @@ export class RecipeService {
     }
   }
 
-  async getRecipe(recipeId: string){
-    return "this returns a recipe from edemam's api";
+  async getRecipe(recipeUri: string){
+    if(!recipeUri || recipeUri === ""){
+      throw new BadRequestException("Not recipe identifier")
+    }
+    let url = `https://api.edamam.com/api/recipes/v2/${recipeUri}?app_id=${process.env.APP_ID_RS}&app_key=${process.env.APP_KEY_RS}&type=public`;
+    const data = {
+      method: "GET",
+      url: url
+    };
+    try{
+      let response = await this.http.makeCall(data)
+      const res = JSON.parse(response+"");
+      return res;
+    }
+    catch(err){
+      throw new ServiceUnavailableException("There is an error from our provider")
+    }
   }
 
   async create(recipe: CreateRecipeDto){

@@ -1,7 +1,5 @@
 import { Column, Entity, JoinTable, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 import { Allergie } from "./user-allergy.entity";
-import { Height_Log } from "./user-height.entity";
-import { Weight_Log } from "./user-weight.entity";
 
 
 @Entity()
@@ -26,7 +24,7 @@ export class User{
   gender:string;
 
   @Column()
-  age: number;
+  birth: string;
 
   @Column()
   weight: number;

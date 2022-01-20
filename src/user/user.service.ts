@@ -8,6 +8,7 @@ import { Allergie } from './entities/user-allergy.entity';
 import * as moment from 'moment';
 import { Weight_Log } from './entities/user-weight.entity';
 import { Height_Log } from './entities/user-height.entity';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UserService {
@@ -20,7 +21,8 @@ export class UserService {
     @InjectRepository(Weight_Log)
     private readonly weightRepository: Repository<Weight_Log>,
     @InjectRepository(Height_Log)
-    private readonly heightRepository: Repository<Height_Log>,){
+    private readonly heightRepository: Repository<Height_Log>,
+    private jwtService: JwtService){
   }
     
   async create(user: CreateUserDto){
@@ -40,8 +42,9 @@ export class UserService {
     const allergies = await Promise.all(
       user.allergies.map(name => this.preloadAllergieByName(name))
     );
-
-    
+    const payload = { username: user.name, sub: user.email };
+    const accessToken = this.jwtService.sign(payload);
+    user.token = accessToken
     const newUser = this.userRepository.create({
       ...user,
       allergies,
@@ -55,7 +58,10 @@ export class UserService {
     );
     await this.weightRepository.save(weight_log)
     await this.heightRepository.save(height_log)
-    return {status: "ok"};
+    return {
+      userId: newAdded.id,
+      access_token: newAdded.token,
+    };
   }
 
   async findOne(userId: string){
