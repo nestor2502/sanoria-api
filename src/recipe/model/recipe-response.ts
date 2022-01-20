@@ -1,4 +1,4 @@
-import { Recipe } from "./recipe-model";
+import { RecipeDetail } from "./recipe-model";
 
 export class RecipeResponse {
   
@@ -7,7 +7,7 @@ export class RecipeResponse {
   readonly to: number;
 
   readonly hits: [{
-    recipe: Recipe;
+    recipe: RecipeDetail;
   }]
 
 }

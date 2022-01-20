@@ -1,5 +1,5 @@
 
-export class Recipe{
+export class RecipeDetail{
 
   readonly label: string;
 
@@ -9,11 +9,11 @@ export class Recipe{
     }
   };
   
-  readonly dietLabels: [string];
+  readonly dietLabels: string[];
 
-  readonly healthLabels: [string];
+  readonly healthLabels: string[];
 
-  readonly cautions: [string];
+  readonly cautions: string[];
 
   readonly ingredients: [{
 
@@ -31,5 +31,7 @@ export class Recipe{
 
   readonly mealType: string;
 
-  readonly totalNutrients: [Object];
+  readonly totalNutrients: Object[];
+
+  readonly uri: string;
 }

@@ -1,21 +1,46 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, JoinTable, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Allergie } from "./user-allergy.entity";
+import { Height_Log } from "./user-height.entity";
+import { Weight_Log } from "./user-weight.entity";
 
 
 @Entity()
 export class User{
   
   @PrimaryGeneratedColumn()
-  id: number
+  id: number;
   
   @Column()
-  name: string
+  name: string;
   
   @Column()
-  email: string
+  email: string;
 
   @Column()
-  password: string
+  password: string;
   
   @Column({ default: null })
-  token: string
+  token: string;
+
+  @Column()
+  gender:string;
+
+  @Column()
+  age: number;
+
+  @Column()
+  weight: number;
+
+  @Column()
+  height: number;
+
+  @JoinTable()
+  @OneToMany(
+    type => Allergie, 
+    allergie => allergie.user,
+    {
+      cascade: true,
+    })
+  allergies: Allergie[];
+
 }
