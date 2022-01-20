@@ -1,4 +1,8 @@
 export class Food{
 
-    readonly
+    readonly foodId: number;
+
+    readonly image: string;
+
+    readonly nutrients: Object;
 }
