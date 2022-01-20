@@ -15,7 +15,7 @@ export class CreateUserDto {
   readonly gender: string;
 
   @IsNumber()
-  readonly age: number;
+  readonly birth: string;
 
   @IsNumber()
   readonly weight: number;

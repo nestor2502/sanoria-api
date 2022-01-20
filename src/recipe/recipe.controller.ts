@@ -17,9 +17,9 @@ export class RecipeController {
   }
 
   @Public()
-  @Get("/:recipeId")
-  getRecipe(@Param('recipeId') recipeId: string){
-    return this.recipeService.getRecipe(recipeId)
+  @Get("/:recipeUri")
+  getRecipe(@Param('recipeUri') recipeUri: string){
+    return this.recipeService.getRecipe(recipeUri)
   }
 
   @Public()
