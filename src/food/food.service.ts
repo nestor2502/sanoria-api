@@ -1,6 +1,6 @@
 import { BadRequestException, HttpException, HttpStatus, Injectable, InternalServerErrorException, NotFoundException, ServiceUnavailableException } from '@nestjs/common';
 import { HttpService } from '../common/http/request'
-import { Food } from './model/food-model';
+import { FoodDetail } from './model/food-model';
 import { FoodResponse } from './model/food-response';
 
 
@@ -34,12 +34,22 @@ export class FoodService {
   }
 
   wrapResponse(data: FoodResponse){
-    
+
     let wrapper = {
-      from: data.text? data.text: ""
+      text: data.text? data.text: "",
+      data: []
     }
+    
+    data.parsed.forEach(foodContainer => {
+      const fullFood: FoodDetail = foodContainer.food;
+      wrapper.data.push({
+        foodId: fullFood.foodId? fullFood.foodId: 0,
+        label: fullFood.label? fullFood.label: "",
+        image: fullFood.image? fullFood.image: "",
+        nutrients: fullFood.nutrients? fullFood.nutrients: null
+      })
+    })
 
     return wrapper;
   }
-
 }
