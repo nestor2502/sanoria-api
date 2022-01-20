@@ -14,7 +14,7 @@ export class CreateUserDto {
   @IsString()
   readonly gender: string;
 
-  @IsNumber()
+  @IsString()
   readonly birth: string;
 
   @IsNumber()
@@ -25,5 +25,7 @@ export class CreateUserDto {
   
   @IsString({each: true})
   readonly allergies: string[];
+  
+  token?: string;
 
 }
