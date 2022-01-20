@@ -5,6 +5,7 @@ import { ApiKeyGuard } from './common/guards/api-key.guard';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true, //si solo se tiene esta propiedad filtra los datos que no pertenecen al dto
     transform: true, //tranforma lo recibido a una instancia que necesito, (ejemplo: findOne() [coffees controller])
