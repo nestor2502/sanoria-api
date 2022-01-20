@@ -85,7 +85,8 @@ export class RecipeService {
         calories: fullRecipe.calories? fullRecipe.calories: 0,
         cuisineType: fullRecipe.cuisineType? fullRecipe.cuisineType: "",
         mealType: fullRecipe.mealType? fullRecipe.mealType: "",
-        totalNutrients: fullRecipe.totalNutrients? fullRecipe.totalNutrients: []
+        totalNutrients: fullRecipe.totalNutrients? fullRecipe.totalNutrients: [],
+        uri: fullRecipe.uri? fullRecipe.uri: ""
       })
     })
     return wrapper;

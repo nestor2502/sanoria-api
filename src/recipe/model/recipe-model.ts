@@ -32,4 +32,6 @@ export class RecipeDetail{
   readonly mealType: string;
 
   readonly totalNutrients: Object[];
+
+  readonly uri: string;
 }
