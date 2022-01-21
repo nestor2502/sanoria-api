@@ -14,11 +14,7 @@ export class AuthService {
         user = user.body;
         const payload = { username: user.username, sub: user.email };
         const accessToken = this.jwtService.sign(payload);
-        let userResult = await this.userService.login({name: user.username, token: accessToken})
-        if(user.password !== userResult.password){
-          throw new UnauthorizedException("Incorrect username or email")
-        }
-        userResult.password="****"
+        let userResult = await this.userService.login({name: user.username, token: accessToken}, user.password)
         return userResult;
     }
 
