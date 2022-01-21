@@ -62,10 +62,7 @@ export class UserService {
     );
     await this.weightRepository.save(weight_log)
     await this.heightRepository.save(height_log)
-    return {
-      userId: newAdded.id,
-      access_token: newAdded.token,
-    };
+    return newAdded;
   }
 
   async findOne(userId: string){
@@ -127,7 +124,9 @@ export class UserService {
         {
           name: Equal(`${updateUserDto.name}`)
         }
-      ]}
+      ],
+      relations: ['allergies']
+    },
     );
     if (!existsUser || existsUser.length == 0){
       throw new NotFoundException(`Username #${updateUserDto.name} not found`);

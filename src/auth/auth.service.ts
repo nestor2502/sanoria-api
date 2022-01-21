@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Public } from 'src/common/decorators/public.decorator';
 import { UserService } from 'src/user/user.service';
@@ -15,10 +15,11 @@ export class AuthService {
         const payload = { username: user.username, sub: user.email };
         const accessToken = this.jwtService.sign(payload);
         let userResult = await this.userService.login({name: user.username, token: accessToken})
-        return {
-          userId: userResult.id,
-          access_token: accessToken,
-        };
+        if(user.password !== userResult.password){
+          throw new UnauthorizedException("Incorrect username or email")
+        }
+        userResult.password="****"
+        return userResult;
     }
 
       async logout(userId: string, req: any) {
