@@ -62,7 +62,8 @@ export class UserService {
     );
     await this.weightRepository.save(weight_log)
     await this.heightRepository.save(height_log)
-    return newAdded;
+    const {password, ...result} = newAdded
+    return result;
   }
 
   async findOne(userId: string){
