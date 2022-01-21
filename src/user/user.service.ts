@@ -200,8 +200,7 @@ export class UserService {
   }
 
   async createAche(acheDto: CreateAcheDto, userId: number){
-    console.log(acheDto)
-    console.log(userId)
+
     if(!acheDto.ache || acheDto.ache == ""){
       throw new NotAcceptableException()
     }

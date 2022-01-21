@@ -18,6 +18,6 @@ export class Recipe{
   image: string;
 
   @Column()
-  recipeId: string;
+  recipeUri: string;
 
 }

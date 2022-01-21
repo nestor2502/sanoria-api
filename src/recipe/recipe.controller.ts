@@ -9,6 +9,11 @@ export class RecipeController {
   
   constructor(private readonly recipeService: RecipeService){}
   
+  /**
+   * Get recipes from edemam api
+   * @param nameQuery 
+   * @returns 
+   */
   @Public()
   @Get("/search")
   geRecipes(@Query() nameQuery){
@@ -16,12 +21,22 @@ export class RecipeController {
     return this.recipeService.searchRecipes(nameQuery)
   }
 
+  /**
+   * Get a specific recipe from edemam
+   * @param recipeUri recipe uri
+   * @returns 
+   */
   @Public()
   @Get("/:recipeUri")
   getRecipe(@Param('recipeUri') recipeUri: string){
     return this.recipeService.getRecipe(recipeUri)
   }
-
+  
+  /**
+   * Add a recipe to user schea
+   * @param recipe 
+   * @returns 
+   */
   @Public()
   @Post()
   create(@Body() recipe: CreateRecipeDto){
@@ -33,5 +48,16 @@ export class RecipeController {
   delete(@Param('recipeId') recipeId: string){
     return this.recipeService.remove(recipeId);
   }
+
+  /**
+   * Add a recipe to user schea
+   * @param recipe 
+   * @returns 
+   */
+   @Public()
+   @Get('/schema/:userID')
+   getSchema(@Param('userID') userID: string){
+     return this.recipeService.findSchema(userID);
+   }
 
 }

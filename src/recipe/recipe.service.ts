@@ -5,7 +5,7 @@ import { RecipeDetail } from './model/recipe-model';
 import { RecipeResponse } from './model/recipe-response';
 import { Recipe } from './entities/recipe.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Equal, Repository } from 'typeorm';
 import { User } from 'src/user/entities/user.entity';
 import { UserService } from 'src/user/user.service';
 import { RecipeRequest } from './model/recipe-request-model';
@@ -85,6 +85,19 @@ export class RecipeService {
       throw new NotFoundException(`Recipe #${recipeId} not found`)
     }
    return this.recipeRepository.remove(recipe);
+  }
+
+  async findSchema(userID: string){
+    const schema = await this.recipeRepository.find({
+      where:[
+        {
+          userId: Equal(`${userID}`)
+        }
+      ]});
+    if(!schema){
+      throw new NotFoundException(`Schema for #${userID} not found`)
+    }
+    return schema;
   }
 
   wrapResponse(data: RecipeResponse){

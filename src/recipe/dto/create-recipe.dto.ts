@@ -12,6 +12,6 @@ export class CreateRecipeDto {
   readonly image: string;
 
   @IsString()
-  readonly recipeId: string;
+  readonly recipeUri: string;
  
 }
