@@ -32,6 +32,7 @@ export class RecipeService {
     let url = `https://api.edamam.com/api/recipes/v2?app_id=${process.env.APP_ID_RS}&app_key=${process.env.APP_KEY_RS}&type=public`;
     url += `&q=${nameQuery.recipeName}`;
     if(nameQuery.schema) url += `&diet=${nameQuery.schema}`;
+    if(nameQuery.health) url += `&health=${nameQuery.health}`;
     if(nameQuery.mealType) url += `&mealType=${nameQuery.mealType}`;
     if(nameQuery.random) url += `&random=${nameQuery.random}`;
     if(nameQuery.calories) url += `&calories=${nameQuery.calories}`;

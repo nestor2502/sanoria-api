@@ -5,6 +5,8 @@ export class RecipeRequest{
     
     readonly schema?: string;
 
+    readonly health?: string;
+
     readonly mealType?: string;
 
     readonly random?: boolean;
