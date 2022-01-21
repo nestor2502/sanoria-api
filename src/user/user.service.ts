@@ -9,6 +9,8 @@ import * as moment from 'moment';
 import { Weight_Log } from './entities/user-weight.entity';
 import { Height_Log } from './entities/user-height.entity';
 import { JwtService } from '@nestjs/jwt';
+import { Ache_Log } from './entities/user-ache.entity';
+import { CreateAcheDto } from './dto/create-ache.dto';
 
 @Injectable()
 export class UserService {
@@ -22,6 +24,8 @@ export class UserService {
     private readonly weightRepository: Repository<Weight_Log>,
     @InjectRepository(Height_Log)
     private readonly heightRepository: Repository<Height_Log>,
+    @InjectRepository(Ache_Log)
+    private readonly acheRepository: Repository<Ache_Log>,
     private jwtService: JwtService){
   }
     
@@ -180,6 +184,34 @@ export class UserService {
       throw new NotFoundException(`User #${userId} log not found`)
     }
     return heightLog;
+  }
+
+  async findAcheRegister(userId: string){
+    const acheLog = await this.acheRepository.find({
+      where:[
+        {
+          userId: Equal(`${userId}`)
+        }
+      ]});
+    if(!acheLog){
+      throw new NotFoundException(`User #${userId} log not found`)
+    }
+    return acheLog;
+  }
+
+  async createAche(acheDto: CreateAcheDto, userId: number){
+    console.log(acheDto)
+    console.log(userId)
+    if(!acheDto.ache || acheDto.ache == ""){
+      throw new NotAcceptableException()
+    }
+    const newAche = this.acheRepository.create({
+      ...acheDto,
+      userId,
+      date: moment().format('MMMM Do YYYY, h:mm:ss a'),
+    });
+    console.log(newAche)
+    return  this.acheRepository.save(newAche);
   }
   
 }

@@ -3,6 +3,7 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Public } from 'src/common/decorators/public.decorator';
+import { CreateAcheDto } from './dto/create-ache.dto';
 
 @Controller('user')
 export class UserController {
@@ -45,5 +46,19 @@ export class UserController {
   findHeightRegister(@Param('userId') userId: string){
     return this.userService.findHeightRegister(userId);
   }
+
+  @Public()
+  @Get('/:userId/ache')
+  findAcheRegister(@Param('userId') userId: string){
+    return this.userService.findAcheRegister(userId);
+  }
+
+  @Public()
+  @Post('/:userId/ache')
+  createAche(@Param('userId') userId: number, @Body() ache: CreateAcheDto){
+    return this.userService.createAche(ache, userId);
+  }
+
+
 
 }
