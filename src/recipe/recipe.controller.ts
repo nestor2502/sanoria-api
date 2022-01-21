@@ -12,8 +12,8 @@ export class RecipeController {
   @Public()
   @Get("/search")
   geRecipes(@Query() nameQuery){
-    const {recipeName} = nameQuery;
-    return this.recipeService.searchRecipes(recipeName)
+    const queryRequest = nameQuery;
+    return this.recipeService.searchRecipes(nameQuery)
   }
 
   @Public()

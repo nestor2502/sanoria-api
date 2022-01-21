@@ -8,6 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from 'src/user/entities/user.entity';
 import { UserService } from 'src/user/user.service';
+import { RecipeRequest } from './model/recipe-request-model';
 
 
 @Injectable()
@@ -23,12 +24,17 @@ export class RecipeService {
     this.http = new HttpService();
   }
 
-  async searchRecipes(search: string){
-    if(!search || search === ""){
+  async searchRecipes(nameQuery: RecipeRequest){
+
+    if(!nameQuery.recipeName || nameQuery.recipeName === ""){
       throw new BadRequestException("Not search word")
     }
     let url = `https://api.edamam.com/api/recipes/v2?app_id=${process.env.APP_ID_RS}&app_key=${process.env.APP_KEY_RS}&type=public`;
-    url += `&q=${search}`;
+    url += `&q=${nameQuery.recipeName}`;
+    if(nameQuery.schema) url += `&diet=${nameQuery.schema}`;
+    if(nameQuery.mealType) url += `&mealType=${nameQuery.mealType}`;
+    if(nameQuery.random) url += `&random=${nameQuery.random}`;
+    if(nameQuery.calories) url += `&calories=${nameQuery.calories}`;
     const data = {
       method: "GET",
       url: url
