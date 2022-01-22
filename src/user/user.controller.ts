@@ -25,11 +25,13 @@ export class UserController {
     return this.userService.findOne(userId);
   }
   
+  @Public()
   @Patch(':userId')
   update(@Param('userId') userId: string, @Body() user: UpdateUserDto){
     return this.userService.update(userId, user);
   }
 
+  @Public()
   @Delete(':userId')
   remove(@Param('userId') userId: string){
     return this.userService.remove(userId);

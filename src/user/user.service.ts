@@ -105,7 +105,11 @@ export class UserService {
       );
       await this.heightRepository.save(height_log)
     }
-    return {status: "ok"};
+    const newDataUser = await this.userRepository.findOne(userId, {
+      relations: ['allergies']
+    });
+    const {password, ...resul} = newDataUser;
+    return resul;
   }
 
   async remove(userId: string){
