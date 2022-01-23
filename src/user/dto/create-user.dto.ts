@@ -15,6 +15,9 @@ export class CreateUserDto {
   readonly gender: string;
 
   @IsString()
+  readonly scheme: string;
+
+  @IsString()
   readonly birth: string;
 
   @IsNumber()

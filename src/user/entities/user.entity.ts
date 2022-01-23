@@ -24,6 +24,9 @@ export class User{
   gender:string;
 
   @Column()
+  scheme: string;
+
+  @Column()
   birth: string;
 
   @Column()
